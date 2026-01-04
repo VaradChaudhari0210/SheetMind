@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.routes.upload import router as upload_router
+from app.routes.process import router as process_router
 from app.database import engine
 from app.models import Base
 
@@ -13,6 +14,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title = "Datasheet Ingestion Service", lifespan=lifespan)
 
 app.include_router(upload_router)
+app.include_router(process_router)
 
 @app.get('/health')
 def health_check():

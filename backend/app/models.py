@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
 from datetime import datetime
 from app.database import Base
 
@@ -10,3 +10,11 @@ class Datasheet(Base):
     file_type = Column(String,nullable=False)
     status = Column(String,default="uploaded")
     uploaded_at = Column(DateTime,default = datetime.utcnow)
+
+class ExtractedContent(Base):
+    __tablename__ = "extracted_content"
+
+    id = Column(Integer, primary_key=True, index=True)
+    datasheet_id = Column(Integer,ForeignKey("datasheets.id"))
+    content_type = Column(String)
+    content = Column(Text)

@@ -4,3 +4,10 @@ sqlalchemy
 psycopg2-binary
 python-multipart
 pydantic
+
+pdfplumber
+pytesseract
+pillow
+pandas
+openpyxl
+python-docx
