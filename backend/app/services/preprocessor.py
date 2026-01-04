@@ -4,6 +4,12 @@ from PIL import Image
 import pandas as pd
 import os
 
+# Configure Tesseract path for Windows (adjust if installed elsewhere)
+if os.name == 'nt':  # Windows
+    tesseract_path = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+    if os.path.exists(tesseract_path):
+        pytesseract.pytesseract.tesseract_cmd = tesseract_path
+
 def extract_from_pdf(file_path):
     text = ""
     with pdfplumber.open(file_path) as pdf:
@@ -11,6 +17,18 @@ def extract_from_pdf(file_path):
             page_text = page.extract_text()
             if page_text:
                 text += page_text + "\n"
+            else:
+                # If no text found, try OCR on the page image
+                try:
+                    img = page.to_image(resolution=300)
+                    page_img = img.original
+                    ocr_text = pytesseract.image_to_string(page_img)
+                    if ocr_text:
+                        text += ocr_text + "\n"
+                except Exception as e:
+                    print(f"OCR failed for page: {e}")
+                    continue
+    print(text.strip())
     return text.strip()
 
 def extract_from_image(file_path):
