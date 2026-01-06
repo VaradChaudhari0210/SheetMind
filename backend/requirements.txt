@@ -5,9 +5,17 @@ psycopg2-binary
 python-multipart
 pydantic
 
+# PDF & OCR processing
 pdfplumber
 pytesseract
 pillow
+pdf2image
+opencv-python
+paddleocr
+paddlepaddle
+
+# Data processing
 pandas
 openpyxl
 python-docx
+numpy
